@@ -87,7 +87,7 @@ public class Ball extends GameObject {
         this.setY(this.getY() + incrementY);
     }
 
-    public boolean colliding(Ball ball)
+    /*public boolean colliding(Ball ball)
     {
         float distanceX = this.getX() - ball.getX();
         float distanceY = this.getY() - ball.getY();
@@ -98,5 +98,12 @@ public class Ball extends GameObject {
         float distanceSquare = (distanceX * distanceX) + (distanceY * distanceY);
 
         return distanceSquare <= radiusSquare;
+    }*/
+
+    public boolean colliding(Paddle paddle)
+    {
+        return (this.getY()) >= paddle.getY()
+                && (this.getX() >= paddle.getX()
+                    && (this.getX() + this.getRadius()) <= (paddle.getX() + paddle.getWidth()));
     }
 }

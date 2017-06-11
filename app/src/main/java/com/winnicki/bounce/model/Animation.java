@@ -18,7 +18,7 @@ public class Animation implements Runnable {
     @Override
     public void run() {
         while (thread != null) {
-            gameView.move();
+            gameView.play();
             gameView.postInvalidate();
             try {
                 Thread.sleep(10);

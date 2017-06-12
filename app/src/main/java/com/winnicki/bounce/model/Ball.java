@@ -14,16 +14,20 @@ public class Ball extends GameObject {
     private int directionY;
     private float velocityX;
     private float velocityY;
+    private boolean ballSet;
+    private boolean bouncedOfPaddle;
 
-    public Ball(String name, float x, float y, float speed, int directionX, int directionY, float velocityX, float velocityY, float radius, Bitmap bitmap) {
-        super(name, x, y);
+    public Ball(String name, float radius, int directionX, int directionY, Bitmap bitmap) {
+        super(name);
         this.radius = radius;
         this.bitmap = bitmap;
-        this.speed = speed;
+        this.speed = 1.0f;
         this.directionX = directionX;
         this.directionY = directionY;
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        this.velocityX = 0.0f;
+        this.velocityY = 0.0f;
+        this.ballSet = false;
+        this.bouncedOfPaddle = false;
     }
 
     public float getRadius() {
@@ -82,28 +86,50 @@ public class Ball extends GameObject {
         this.velocityY = velocityY;
     }
 
+    public boolean isBallSet() {
+        return ballSet;
+    }
+
+    public void setBallSet(boolean ballSet) {
+        this.ballSet = ballSet;
+    }
+
+    public boolean isBouncedOfPaddle() {
+        return bouncedOfPaddle;
+    }
+
+    public void setBouncedOfPaddle(boolean bouncedOfPaddle) {
+        this.bouncedOfPaddle = bouncedOfPaddle;
+    }
+
     public void move(float incrementX, float incrementY) {
         this.setX(this.getX() + incrementX);
         this.setY(this.getY() + incrementY);
     }
 
-    /*public boolean colliding(Ball ball)
-    {
-        float distanceX = this.getX() - ball.getX();
-        float distanceY = this.getY() - ball.getY();
+    public boolean hitTop(Paddle paddle) {
+        return this.getX() + this.getRadius() >= paddle.getX()
+                && this.getX() - this.getRadius() <= paddle.getX() + paddle.getWidth()
+                && this.getY() + this.getRadius() >= paddle.getY()
+                && this.getY() + this.getRadius() <= paddle.getY() + 5                                                                                                                                                                                                        ;
+    }
 
-        float sumRadius = getRadius() + ball.getRadius();
-        float radiusSquare = sumRadius * sumRadius;
+    public boolean hitSide(Paddle paddle) {
+        return (this.getY() + this.getRadius() >= paddle.getY()
+                && this.getY() - this.getRadius() <= paddle.getY() + paddle.getHeight()
+                && this.getX() + this.getRadius() >= paddle.getX()
+                && this.getX() + this.getRadius() <= paddle.getX() + 5)
+                || (this.getY() + this.getRadius() >= paddle.getY()
+                && this.getY() - this.getRadius() <= paddle.getY() + paddle.getHeight()
+                && this.getX() - this.getRadius() <= paddle.getX() + paddle.getWidth()
+                && this.getX() - this.getRadius() >= paddle.getX() + paddle.getWidth() - 5);
+    }
 
-        float distanceSquare = (distanceX * distanceX) + (distanceY * distanceY);
+    public void resetSpeed() {
+        this.speed = 1.0f;
+    }
 
-        return distanceSquare <= radiusSquare;
-    }*/
-
-    public boolean colliding(Paddle paddle)
-    {
-        return (this.getY()) >= paddle.getY()
-                && (this.getX() >= paddle.getX()
-                    && (this.getX() + this.getRadius()) <= (paddle.getX() + paddle.getWidth()));
+    public void incrementSpeed() {
+        this.speed += 1.0f;
     }
 }

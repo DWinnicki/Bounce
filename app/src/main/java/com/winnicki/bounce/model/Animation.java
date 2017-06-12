@@ -2,10 +2,6 @@ package com.winnicki.bounce.model;
 
 import android.util.Log;
 
-/**
- * Created by winnicki on 2017-06-02.
- */
-
 public class Animation implements Runnable {
 
     private GameView gameView;

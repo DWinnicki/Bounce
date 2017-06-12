@@ -11,8 +11,8 @@ public class Paddle extends GameObject {
     private float height;
     private  Bitmap bitmap;
 
-    public Paddle(String name, float x, float y, float width, float height, Bitmap bitmap) {
-        super(name, x, y);
+    public Paddle(String name, float width, float height, Bitmap bitmap) {
+        super(name);
         this.width = width;
         this.height = height;
         this.bitmap = bitmap;

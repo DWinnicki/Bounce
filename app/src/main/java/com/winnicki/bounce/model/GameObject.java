@@ -9,10 +9,8 @@ public class GameObject {
     private float x;
     private float y;
 
-    public GameObject(String name, float x, float y) {
+    public GameObject(String name) {
         this.name = name;
-        this.x = x;
-        this.y = y;
     }
 
     public float getX() {

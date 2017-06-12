@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.winnicki.bounce.model.Animation;
 import com.winnicki.bounce.model.GameView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    LinearLayout gameCanvas;
-    Button btnStart;
+    RelativeLayout gameCanvas;
+    Button btnStart, btnStop;
     GameView gameView;
     Animation animation;
 
@@ -23,10 +25,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialize() {
-        gameCanvas = (LinearLayout) findViewById(R.id.gameCanvas);
+        gameCanvas = (RelativeLayout) findViewById(R.id.gameCanvas);
         btnStart = (Button)findViewById(R.id.btnStart);
+        btnStop = (Button)findViewById(R.id.btnStop);
 
         btnStart.setOnClickListener(this);
+        btnStop.setOnClickListener(this);
 
         gameView = new GameView(this);
         gameCanvas.addView(gameView);
@@ -38,7 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnStart:
+                btnStart.setVisibility(View.GONE);
+                btnStop.setVisibility(View.VISIBLE);
                 animation.start();
+                break;
+            case R.id.btnStop:
+                btnStop.setVisibility(View.GONE);
+                btnStart.setVisibility(View.VISIBLE);
+                animation.stop();
                 break;
         }
     }

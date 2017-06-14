@@ -2,20 +2,14 @@ package com.winnicki.bounce.model;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by winnicki on 2017-06-02.
- */
-
 public class Paddle extends GameObject {
     private float width;
     private float height;
-    private  Bitmap bitmap;
 
-    public Paddle(String name, float width, float height, Bitmap bitmap) {
-        super(name);
+    public Paddle(String name, Bitmap bitmap, float width, float height) {
+        super(name, bitmap);
         this.width = width;
         this.height = height;
-        this.bitmap = bitmap;
     }
 
     public float getWidth() {
@@ -34,11 +28,23 @@ public class Paddle extends GameObject {
         this.height = height;
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
+    public float getCenter() {
+        return getWidth()/2;
     }
 
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public float getRightSide() {
+        return this.getX() + getWidth();
+    }
+
+    public float getLeftSide() {
+        return this.getX();
+    }
+
+    public float getTop() {
+        return getY();
+    }
+
+    public float getBottom() {
+        return getY() + getHeight();
     }
 }

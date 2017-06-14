@@ -1,9 +1,5 @@
 package com.winnicki.bounce.model;
 
-/**
- * Created by David on 6/10/2017.
- */
-
 public class Score {
     private int caught;
     private int missed;

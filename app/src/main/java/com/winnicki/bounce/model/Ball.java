@@ -2,13 +2,8 @@ package com.winnicki.bounce.model;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by winnicki on 2017-06-02.
- */
-
 public class Ball extends GameObject {
     private float radius;
-    private Bitmap bitmap;
     private float speed;
     private int directionX;
     private int directionY;
@@ -17,11 +12,9 @@ public class Ball extends GameObject {
     private boolean ballSet;
     private boolean bouncedOfPaddle;
 
-    public Ball(String name, float radius, int directionX, int directionY, Bitmap bitmap) {
-        super(name);
+    public Ball(String name, Bitmap bitmap, float radius, int directionX, int directionY) {
+        super(name, bitmap);
         this.radius = radius;
-        this.bitmap = bitmap;
-        this.speed = 1.0f;
         this.directionX = directionX;
         this.directionY = directionY;
         this.velocityX = 0.0f;
@@ -36,14 +29,6 @@ public class Ball extends GameObject {
 
     public void setRadius(float radius) {
         this.radius = radius;
-    }
-
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
     }
 
     public float getSpeed() {
@@ -103,33 +88,53 @@ public class Ball extends GameObject {
     }
 
     public void move(float incrementX, float incrementY) {
-        this.setX(this.getX() + incrementX);
-        this.setY(this.getY() + incrementY);
+        setX(getX() + incrementX);
+        setY(getY() + incrementY);
     }
 
     public boolean hitTop(Paddle paddle) {
-        return this.getX() + this.getRadius() >= paddle.getX()
-                && this.getX() - this.getRadius() <= paddle.getX() + paddle.getWidth()
-                && this.getY() + this.getRadius() >= paddle.getY()
-                && this.getY() + this.getRadius() <= paddle.getY() + 5                                                                                                                                                                                                        ;
+        return getRightSide() >= paddle.getLeftSide()
+                && getLeftSide() <= paddle.getRightSide()
+                && getBottom() >= paddle.getTop()
+                && getBottom() <= paddle.getTop() + 5                                                                                                                                                                                                        ;
     }
 
-    public boolean hitSide(Paddle paddle) {
-        return (this.getY() + this.getRadius() >= paddle.getY()
-                && this.getY() - this.getRadius() <= paddle.getY() + paddle.getHeight()
-                && this.getX() + this.getRadius() >= paddle.getX()
-                && this.getX() + this.getRadius() <= paddle.getX() + 5)
-                || (this.getY() + this.getRadius() >= paddle.getY()
-                && this.getY() - this.getRadius() <= paddle.getY() + paddle.getHeight()
-                && this.getX() - this.getRadius() <= paddle.getX() + paddle.getWidth()
-                && this.getX() - this.getRadius() >= paddle.getX() + paddle.getWidth() - 5);
+    public boolean hitLeftSide(Paddle paddle) {
+        return getBottom() >= paddle.getTop()
+                && getTop() <= paddle.getBottom()
+                && getRightSide() >= paddle.getLeftSide()
+                && getRightSide() <= paddle.getLeftSide() + 5;
     }
 
-    public void resetSpeed() {
-        this.speed = 1.0f;
+    public boolean hitRightSide(Paddle paddle) {
+        return getBottom() >= paddle.getTop()
+                && getTop() <= paddle.getBottom()
+                && getLeftSide() <= paddle.getRightSide()
+                && getLeftSide() >= paddle.getRightSide() - 5;
+    }
+
+    public float getRightSide() {
+        return getX() + getRadius();
+    }
+
+    public float getLeftSide() {
+        return getX() - getRadius();
+    }
+
+    public float getBottom() {
+        return getY() + getRadius();
+    }
+
+    public float getTop() {
+        return getY() - getRadius();
+    }
+
+    public void reset() {
+        setY(getRadius());
+        setSpeed(2.0f);
     }
 
     public void incrementSpeed() {
-        this.speed += 1.0f;
+        setSpeed(getSpeed() + 1.0f);
     }
 }

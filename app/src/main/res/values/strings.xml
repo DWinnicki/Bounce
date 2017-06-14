@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Bounce</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="restart">Restart</string>
+    <string name="welcome_exclamation">Welcome!</string>
+    <string name="caught_colon">Caught:\u0020</string>
+    <string name="missed_colon">Missed:\u0020</string>
+    <string name="score_colon">Score:\u0020</string>
 </resources>

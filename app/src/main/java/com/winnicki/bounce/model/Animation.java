@@ -19,7 +19,7 @@ public class Animation implements Runnable {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                Log.d("Animation", e.getMessage());
+                Log.d("ANIMATION", e.getMessage());
             }
         }
     }

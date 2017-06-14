@@ -5,15 +5,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.winnicki.bounce.model.Animation;
 import com.winnicki.bounce.model.GameView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    RelativeLayout gameCanvas;
-    Button btnStart, btnStop;
+    LinearLayout gameCanvas;
+    TextView tvWelcome;
+    Button btnStart, btnPause, btnResume, btnRestart;
+
+    Button buttons[] = {
+            btnStart,
+            btnPause,
+            btnResume,
+            btnRestart
+    };
+
+    int buttonIds[] = {
+            R.id.btnStart,
+            R.id.btnPause,
+            R.id.btnResume,
+            R.id.btnRestart
+    };
     GameView gameView;
     Animation animation;
 
@@ -25,31 +39,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initialize() {
-        gameCanvas = (RelativeLayout) findViewById(R.id.gameCanvas);
-        btnStart = (Button)findViewById(R.id.btnStart);
-        btnStop = (Button)findViewById(R.id.btnStop);
+        gameCanvas = (LinearLayout)findViewById(R.id.gameCanvas);
+        tvWelcome = (TextView)findViewById(R.id.tvWelcome);
 
-        btnStart.setOnClickListener(this);
-        btnStop.setOnClickListener(this);
+        for(int i=0;i<buttons.length; i++) {
+            buttons[i] = (Button)findViewById(buttonIds[i]);
+            buttons[i].setOnClickListener(this);
+        }
+    }
 
+    private void gameSetup() {
         gameView = new GameView(this);
         gameCanvas.addView(gameView);
         animation = new Animation(gameView);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnStart:
-                btnStart.setVisibility(View.GONE);
-                btnStop.setVisibility(View.VISIBLE);
+                gameSetup();
+                tvWelcome.setVisibility(View.GONE);
+                buttons[0].setVisibility(View.GONE);
+                buttons[3].setVisibility(View.VISIBLE);
+                buttons[1].setVisibility(View.VISIBLE);
                 animation.start();
                 break;
-            case R.id.btnStop:
-                btnStop.setVisibility(View.GONE);
-                btnStart.setVisibility(View.VISIBLE);
+            case R.id.btnPause:
+                buttons[1].setVisibility(View.GONE);
+                buttons[2].setVisibility(View.VISIBLE);
                 animation.stop();
+                break;
+            case R.id.btnResume:
+                buttons[2].setVisibility(View.GONE);
+                buttons[1].setVisibility(View.VISIBLE);
+                animation.start();
+                break;
+            case R.id.btnRestart:
+                recreate();
                 break;
         }
     }
